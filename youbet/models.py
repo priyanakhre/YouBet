@@ -14,6 +14,7 @@ class User(models.Model):
             first_name = self.first_name,
             last_name = self.last_name,
             username = self.username,
+            password = self.password,
             num_tokens = self.num_tokens,
             num_flags = self.num_flags
         )
@@ -23,11 +24,11 @@ class Bet(models.Model):
     response_limit = models.IntegerField()
     question = models.CharField(max_length=200)
     description = models.TextField()
-    outcome = models.BooleanField()
+    outcome = models.NullBooleanField(blank=True, null=True)
     min_buyin = models.IntegerField()
     per_person_cap = models.IntegerField()
-    initiation = models.DateTimeField()
-    expiration = models.DateTimeField()
+    #initiation = models.DateTimeField(auto_now=True)
+    #expiration = models.DateTimeField(auto_now=True)
 
     def as_json(self):
         return dict(
@@ -39,23 +40,23 @@ class Bet(models.Model):
             outcome = self.outcome,
             min_buyin = self.min_buyin,
             per_person_cap = self.per_person_cap,
-            initiation = self.initiation,
-            expiration = self.expiration
+            #initiation = self.initiation,
+            #expiration = self.expiration
         )
 
 class Response(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    bet = models.ForeignKey(Bet, on_delete=models.CASCADE)
+    user_id = models.IntegerField()
+    bet_id = models.IntegerField()
     answer = models.BooleanField()
     amount = models.IntegerField()
-    resp_timestamp = models.DateTimeField()
+    #resp_timestamp = models.DateTimeField(auto_now=True)
     
     def as_json(self):
         return dict(
             response_id = self.id,
-            user_id = self.user,
-            bet = self.bet,
+            user_id = self.user_id,
+            bet_id = self.bet_id,
             answer = self.answer,
             amount = self.amount,
-            resp_timestamp = self.resp_timestamp
+            #resp_timestamp = self.resp_timestamp
         )
