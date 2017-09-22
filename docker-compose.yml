@@ -6,4 +6,4 @@ models:
       - ../:/app
     ports:
       - "8001:8000"
-    command: bash -c "python isaproject/manage.py makemigrations && python isaproject/manage.py migrate && python isaproject/manage.py loaddata isaproject/db.json && mod_wsgi-express start-server --working-directory isaproject/ --reload-on-changes isaproject/isaproject/wsgi.py"
+    command: bash -c "python /app/isaproject/manage.py makemigrations && python /app/isaproject/manage.py migrate && python /app/isaproject/manage.py loaddata /app/isaproject/db.json && mod_wsgi-express start-server --working-directory ../ --reload-on-changes /app/isaproject/isaproject/wsgi.py"
